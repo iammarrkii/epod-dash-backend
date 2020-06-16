@@ -7,24 +7,33 @@ const driverResolvers = {
       const fetchLocation: any = await fetchDriverLocation()
       const driverLocations = fetchLocation.getDriverLocations
 
-      if (driverLocations === null) {
-        return {}
-      }
-
       const functionzx = (driverId) => {
+        if (driverLocations === null) {
+          return undefined
+        }
+
         const filteredLoc = driverLocations.filter(
           (loc) => (loc.driverId = driverId),
         )
 
         return filteredLoc[filteredLoc.length - 1] || {}
       }
-      return driver.map((i) => ({
-        id: i.id,
-        name: i.name,
-        plateNumber: i.plateNumber,
-        porter: i.porter,
-        location: functionzx(i.id),
-      }))
+      return driver.map((i) => {
+        const location = functionzx(i.id)
+        return {
+          id: i.id,
+          name: i.name,
+          plateNumber: i.plateNumber,
+          porter: i.porter,
+          timeStamp: location.timeStamp || '',
+          driverId: location.driverId || '',
+          latitude: location.latitude || 0,
+          longitude: location.longitude || 0,
+          mobileTimeStamp: location.mobileTimeStamp || '',
+          mobileMocked: location.mobileMocked || false,
+          textAddress: location.textAddress || '',
+        }
+      })
     },
 
     getDriver: async (parent, { driverId }, context, info) => {
@@ -34,18 +43,36 @@ const driverResolvers = {
       const fetchLocation: any = await fetchDriverLocation()
       const driverLocations = fetchLocation.getDriverLocations
 
-      if (driverLocations === null) {
-        return {}
-      }
-
       const filteredDriver = driver.find((driv) => driv.id === driverId)
+
+      if (driverLocations === null) {
+        return {
+          ...filteredDriver,
+          timeStamp: '',
+          driverId: '',
+          latitude: 0,
+          longitude: 0,
+          mobileTimeStamp: '',
+          mobileMocked: false,
+          textAddress: '',
+        }
+      }
 
       const filteredLoc = driverLocations.filter(
         (loc) => (loc.driverId = driverId),
       )
-      let location: any = filteredLoc[filteredLoc.length - 1] || {}
+      let location: any = filteredLoc[filteredLoc.length - 1] || undefined
 
-      return { ...filteredDriver, location: location }
+      return {
+        ...filteredDriver,
+        timeStamp: location.timeStamp || '',
+        driverId: location.driverId || '',
+        latitude: location.latitude || 0,
+        longitude: location.longitude || 0,
+        mobileTimeStamp: location.mobileTimeStamp || '',
+        mobileMocked: location.mobileMocked || false,
+        textAddress: location.textAddress || '',
+      }
     },
   },
 }
