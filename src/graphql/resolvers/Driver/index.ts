@@ -13,7 +13,7 @@ const driverResolvers = {
         }
 
         const filteredLoc = driverLocations.filter(
-          (loc) => (loc.driverId = driverId),
+          (loc) => loc.driverId == driverId,
         )
 
         return filteredLoc[filteredLoc.length - 1] || {}
@@ -59,7 +59,7 @@ const driverResolvers = {
       }
 
       const filteredLoc = driverLocations.filter(
-        (loc) => (loc.driverId = driverId),
+        (loc) => loc.driverId == driverId,
       )
       let location: any = filteredLoc[filteredLoc.length - 1] || undefined
 
