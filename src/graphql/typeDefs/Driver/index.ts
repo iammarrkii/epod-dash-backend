@@ -6,7 +6,13 @@ const drivertypeDefs = gql`
     name: String
     plateNumber: String
     porter: String
-    location: DriverLocation
+    timeStamp: String
+    driverId: String
+    latitude: Float
+    longitude: Float
+    mobileTimeStamp: String
+    mobileMocked: Boolean
+    textAddress: String
   }
   type DriverLocation {
     id: ID
