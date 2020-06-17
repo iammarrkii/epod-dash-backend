@@ -276,7 +276,6 @@ const reportResolver = {
         })
       }
 
-      console.log('Deliveries', deliveries)
       return deliveries.map((del) => ({
         customer: del.customer.name,
         driver: del.driver.name,

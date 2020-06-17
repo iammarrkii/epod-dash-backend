@@ -63,8 +63,6 @@ export const varianceReportVendor = (trucker: any, deliveries: any) => {
         let items: any = []
         del.items.map((item: any) => {
           const convertVariance = (variance: number, qty: number) => {
-            console.log(variance)
-
             if (variance < 0) {
               return variance * -1
             }
@@ -97,7 +95,6 @@ export const varianceReportVendor = (trucker: any, deliveries: any) => {
             })
           }
         })
-        console.log(del.items.length)
         variance = variance != 0 ? variance / del.items.length : 0
         return {
           delivery: del.id,

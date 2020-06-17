@@ -12,9 +12,6 @@ export const getCompleteShipment = (
       }
     })
 
-  console.log(pendingCount)
-  console.log(shipmentNumber)
-  console.log(deliveries)
   if (pendingCount > 0) {
     return false
   } else {

@@ -15,14 +15,18 @@ import {
 } from 'graphql-tools'
 const cache = new InMemoryCache()
 import fetch from 'cross-fetch'
-import { fetchDelivery, fetchDriverLocation, fetchDriver } from './helper'
+import {
+  fetchDelivery,
+  fetchDriverLocation,
+  fetchDriver,
+  slowFetchDelivery,
+} from './helper'
 
 const { authURI, PORT, EPOD_API_URI } = process.env
 
 const getUser = async (authorizationToken) => {
   const [tokenType, token] = authorizationToken.split(' ')
   let authGqlClient
-  console.log('AuthURI', authURI, authorizationToken)
 
   if (tokenType) {
     authGqlClient = new ApolloClient({
@@ -67,11 +71,9 @@ const getUser = async (authorizationToken) => {
         })
     })
   } else if (tokenType === 'Basic') {
-    console.log('Basic ', authorizationToken)
     const buff64 = new Buffer(token, 'base64')
     const ascData = buff64.toString('ascii')
     const [user, pass] = ascData.split(':')
-    console.log('ascii', ascData)
 
     const mutate = authGqlClient.mutate({
       mutation: gql`
@@ -238,6 +240,7 @@ const serverContext = async (session) => {
       user,
       fetchDelivery: async () =>
         fetchDelivery(session.req.headers.authorization),
+      //slowFetchDelivery(session.req.headers.authorization),
       fetchDriverLocation: async () =>
         fetchDriverLocation(session.req.headers.authorization),
       fetchDriver: async () => fetchDriver(session.req.headers.authorization),
