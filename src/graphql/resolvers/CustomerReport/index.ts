@@ -61,7 +61,6 @@ const customerReportResolver = {
         totalVariance: Number
         shipment: String
       }> = materialReportCustomer(deliveries)
-      console.log(materialReport)
 
       const varianceReport = varianceReportCustomer(deliveries)
 

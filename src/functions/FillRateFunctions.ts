@@ -40,9 +40,6 @@ export const makeFillRate = (deliveries: any, range: string) => {
     getTotalCustomerFillRate(fillRateArray, c, range),
   )
 
-  console.log('vendorFillRate', vendorFillRate)
-  console.log('customerFillRate', customerFillRate)
-
   const bottomVendorFillrate = vendorFillRate
   const topVendor: Array<VendorFillRate> = getTopVendor(vendorFillRate)
   const bottomVendor: Array<VendorFillRate> = getBottomVendor(
@@ -53,9 +50,6 @@ export const makeFillRate = (deliveries: any, range: string) => {
   const bottomCustomer: Array<CustomerFillRate> = getBottomCustomer(
     customerFillRate,
   )
-
-  console.log('topVendor', topVendor)
-  console.log('bottomVendor', bottomVendor)
 
   let vendor: Array<VendorFillRate> = []
   let customer: Array<CustomerFillRate> = []
@@ -85,8 +79,6 @@ const getTopVendor = (vendorFillrate: Array<VendorFillRate>) => {
 const getBottomVendor = (vendorFillrate: Array<VendorFillRate>) => {
   const fillrate = vendorFillrate.sort((a, b) => a.fillrate - b.fillrate)
   const newFillRate = fillrate
-  console.log('vrate', vendorFillrate.length)
-  console.log('newfillrate', newFillRate)
   let length = fillrate.length / 2
   length = parseInt(length.toString())
 
