@@ -29,6 +29,7 @@ const reportTypeDef = gql`
     date: String
     time: String
     deliveryId: String
+    variance: [Variance]
   }
 
   type VarianceReport {

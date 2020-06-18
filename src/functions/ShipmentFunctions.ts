@@ -68,7 +68,11 @@ export const varianceReportShipment = (
             return variance
           }
           const qty = item.qty
-          const varianceQty = convertVariance(item.varianceQty, item.qty) || 0
+          const varianceQty = item.variance.reduce(
+            (totalVariance, i) =>
+              (totalVariance = totalVariance + i.varianceQty),
+            0,
+          )
           const newVariance = (varianceQty / qty) * 100
 
           variance = variance + newVariance
@@ -78,6 +82,11 @@ export const varianceReportShipment = (
               id: item.id,
               qty: item.qty,
               varianceQty: item.varianceQty,
+              variance: item.variance.map((v) => ({
+                id: v.id,
+                varianceQty: v.varianceQty,
+                reasonOfVariance: v.reasonOfVariance,
+              })),
               itemNumber: item.itemNumber,
               material: item.material,
               reasonOfVariance: item.reasonOfVariance,

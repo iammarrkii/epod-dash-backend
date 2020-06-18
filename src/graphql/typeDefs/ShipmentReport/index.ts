@@ -10,6 +10,7 @@ const shipmentTypeDef = gql`
     porter: String
     varianceReport: [VarianceReport]
     completeReport: CompleteReport
+    variance: [Variance]
   }
 
   type Query {
