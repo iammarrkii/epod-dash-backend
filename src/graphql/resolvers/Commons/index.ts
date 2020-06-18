@@ -289,6 +289,11 @@ const reportResolver = {
           pricePerUnit: i.pricePerUnit,
           uom: i.uom,
           qty: i.qty,
+          variance: i.variance.map((v) => ({
+            id: v.id,
+            varianceQty: v.varianceQty,
+            reasonOfVariance: v.reasonOfVariance,
+          })),
           varianceQty: i.varianceQty,
           reasonOfVariance: i.reasonOfVariance,
           deliveryDateAndTime: i.deliveryDateAndTime,
