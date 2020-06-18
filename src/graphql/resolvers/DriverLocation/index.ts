@@ -12,10 +12,6 @@ const driverLocationResolvers = {
 
       const mobileTimeStamp = MobiletimeStampTimeAndDate()
 
-      if (mobileTimeStamp === undefined) {
-        return ''
-      }
-
       const filteredDriverLocation = driver.find((driv) => driv.id === driverId)
       const filteredLoc = driverLocations.filter(
         (loc) => loc.driverId == driverId,
