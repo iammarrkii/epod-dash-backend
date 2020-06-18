@@ -18,6 +18,7 @@ const customerTypeDef = gql`
     withVarianceMaterial: [MaterialDetails]
     varianceReport: VarianceReport
     materialReport: MaterialReport
+    variance: [Variance]
   }
 
   type MaterialReport {
