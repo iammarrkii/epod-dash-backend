@@ -28,6 +28,16 @@ const drivertypeDefs = gql`
     allDrivers: [Driver]
     getDriver(driverId: String): Driver
   }
+
+  type Mutation {
+    createDriver(driver: DriverInput): Driver
+  }
+
+  input DriverInput {
+    name: String
+    porter: String
+    plateNumber: String
+  }
 `
 
 export default drivertypeDefs

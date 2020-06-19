@@ -202,3 +202,38 @@ export const fetchDriverLocation = async (header) => {
     .catch((error) => error)
   return result.data || result.error
 }
+
+export const createDriver = (header) => async (driver) => {
+  const uri = EPOD_API_URI || 'http://localhost:4000/graphql'
+
+  const link = new HttpLink({ uri })
+
+  const mutateDriver = gql`
+    mutation a($driver: DriverInput) {
+      createDriver(driver: $driver) {
+        id
+        name
+        plateNumber
+        porter
+      }
+    }
+  `
+
+  const operation = {
+    query: mutateDriver,
+    variables: { driver: driver },
+    context: {
+      headers: {
+        //Den auth
+        Authorization: header,
+        //Mark auth
+        //Authorization: "Basic bWFyazoxMjM=",
+      },
+    },
+  }
+
+  const result: any = await makePromise(execute(link, operation))
+    .then((data) => data)
+    .catch((error) => error)
+  return result.data || result.error
+}

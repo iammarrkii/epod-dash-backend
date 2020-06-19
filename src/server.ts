@@ -20,6 +20,7 @@ import {
   fetchDriverLocation,
   fetchDriver,
   slowFetchDelivery,
+  createDriver,
 } from './helper'
 
 const { authURI, PORT, EPOD_API_URI } = process.env
@@ -244,6 +245,7 @@ const serverContext = async (session) => {
       fetchDriverLocation: async () =>
         fetchDriverLocation(session.req.headers.authorization),
       fetchDriver: async () => fetchDriver(session.req.headers.authorization),
+      createDriver: async () => createDriver(session.req.headers.authorization),
     },
   }
 }
