@@ -41,7 +41,11 @@ export const noVarianceMaterialReport = (deliveries: any) => {
   }> = []
   deliveries.map((del) => {
     del.items.map((i) => {
-      if (i.varianceQty === 0) {
+      const totalVar = i.variance.reduce(
+        (totalVariance, v) => (totalVariance = totalVariance + v.varianceQty),
+        0,
+      )
+      if (totalVar === 0) {
         material.push({
           id: i.id,
           itemNumber: i.itemNumber,
