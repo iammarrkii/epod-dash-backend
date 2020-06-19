@@ -86,7 +86,12 @@ export const materialReportCustomer = (deliveries: any) => {
       let totalVariance = 0
       let totalQuantity = 0
       d.items.map((i) => {
-        totalVariance = totalVariance + parseFloat(i.varianceQty)
+        totalVariance =
+          totalVariance +
+          i.variance.reduce(
+            (total: number, v) => (total = total + parseFloat(v.varianceQty)),
+            0,
+          )
         totalQuantity = totalQuantity + parseFloat(i.qty)
       })
       return {
