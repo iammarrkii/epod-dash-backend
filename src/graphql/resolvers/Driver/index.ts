@@ -75,6 +75,17 @@ const driverResolvers = {
       }
     },
   },
+  Mutation: {
+    createDriver: async (parent, { driver }, context, info) => {
+      const { createDriver } = context
+
+      const addNewDriver = await createDriver()
+      console.log('addNewDriver', addNewDriver)
+      const newDriver = await addNewDriver(driver)
+      console.log('newDriver', newDriver)
+      return await newDriver.createDriver
+    },
+  },
 }
 
 export default driverResolvers
