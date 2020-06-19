@@ -237,3 +237,44 @@ export const createDriver = (header) => async (driver) => {
     .catch((error) => error)
   return result.data || result.error
 }
+
+export const createCustomer = (header) => async (customer) => {
+  const uri = EPOD_API_URI || 'http://localhost:4000/graphql'
+
+  const link = new HttpLink({ uri })
+
+  const mutateCustomer = gql`
+    mutation a($customer: CustomerInput) {
+      createCustomer(customer: $customer) {
+        name
+        address{
+         building_name
+         street
+         city
+         state
+         zip_code
+         fullAddress
+        }
+      }
+    }
+  `
+
+  const operation = {
+    query: mutateCustomer,
+    variables: { customer: customer },
+    context: {
+      headers: {
+        //Den auth
+        Authorization: header,
+        //Mark auth
+        //Authorization: "Basic bWFyazoxMjM=",
+      },
+    },
+  }
+
+  const result: any = await makePromise(execute(link, operation))
+    .then((data) => data)
+    .catch((error) => error)
+  return result.data || result.error
+}
+

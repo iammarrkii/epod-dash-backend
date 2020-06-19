@@ -100,6 +100,18 @@ const customerReportResolver = {
       //   }
       // })
     },
+
+    
+  },
+  Mutation: {
+    createCustomer: async (parent, { customer }, context, info) => {
+      const { createCustomer } = context
+      const addNewCustomer = await createCustomer()
+      console.log('addNewCustomer', addNewCustomer)
+      const newCustomer = await addNewCustomer(customer)
+      console.log('newCustomer', newCustomer)
+      return await newCustomer.createCustomer
+    },
   },
 }
 
