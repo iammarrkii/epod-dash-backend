@@ -249,3 +249,97 @@ export const createCustomer = (header) => async (customer) => {
   return result.data || result.error
 }
 
+export const createDelivery = (header) => async (delivery) => {
+  const uri = EPOD_API_URI || 'http://localhost:4000/graphql'
+
+  const link = new HttpLink({ uri })
+
+  const mutateDelivery = gql`
+    mutation a($delivery: DeliveryInput) {
+      createDelivery(delivery: $delivery) {
+        id
+        items{
+          id
+          itemNumber
+          material
+          pricePerUnit
+          uom
+          qty
+          deliveryDateAndTime
+          deliveryId
+          status
+          materialnumber
+          variance{
+            varianceQty
+            reasonOfVariance
+          }
+        }
+        customer{
+          id
+          name
+          address{
+            building_name
+            street
+            city
+            state
+            zip_code
+            fullAddress
+          }
+        }
+        driver{
+          id
+          name
+          plateNumber
+          porter
+        }
+        scheduledDate
+        scheduledTime
+        unSynced
+        file{
+          path
+        }
+        unSyncedItems{
+          itemNumber
+          material
+          pricePerUnit
+          uom
+          qty
+          deliveryDateAndTime
+          deliveryId
+          status
+          materialnumber
+          variance{
+            varianceQty
+            reasonOfVariance
+          } 
+        }
+        delvStatus
+        shipmentNumber
+        trucker
+        receivedBy
+      
+      }
+    }
+  `
+
+  const operation = {
+    query: mutateDelivery,
+    variables: { delivery: delivery },
+    context: {
+      headers: {
+        //Den auth
+        Authorization: header,
+        //Mark auth
+        //Authorization: "Basic bWFyazoxMjM=",
+      },
+    },
+  }
+
+  const result: any = await makePromise(execute(link, operation))
+    .then((data) => data)
+    .catch((error) => error)
+    console.log(result.data)
+  return result.data || result.error
+  
+}
+

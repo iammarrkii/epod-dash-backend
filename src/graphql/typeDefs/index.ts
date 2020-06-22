@@ -11,6 +11,7 @@ import userInfo from './UserInfo'
 import shipmentage from './ShipmentAge'
 import DriverLocation from './DriverLocation'
 import driver from './Driver'
+import delivery from './Delivery'
 
 const typeDefs = [
   report,
@@ -23,6 +24,7 @@ const typeDefs = [
   shipmentage,
   DriverLocation,
   driver,
+  delivery,
 ]
 
 // NOTE: 2nd param is optional, and defaults to false

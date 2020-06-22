@@ -22,6 +22,7 @@ import {
   slowFetchDelivery,
   createDriver,
   createCustomer,
+  createDelivery,
 } from './helper'
 
 const { authURI, PORT, EPOD_API_URI } = process.env
@@ -248,6 +249,7 @@ const serverContext = async (session) => {
       fetchDriver: async () => fetchDriver(session.req.headers.authorization),
       createDriver: async () => createDriver(session.req.headers.authorization),
       createCustomer: async () => createCustomer(session.req.headers.authorization),
+      createDelivery: async () => createDelivery(session.req.headers.authorization),
     },
   }
 }
