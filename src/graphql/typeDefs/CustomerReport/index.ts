@@ -53,10 +53,40 @@ const customerTypeDef = gql`
     reasonOfVariance: String
     deliveryDateAndTime: String
   }
+  type CustomerList {
+    name: String
+    address: AddressList
+  }
+
+  type AddressList {
+    building_name: String
+    street: String
+    city: String
+    state: String
+    zip_code: String
+    fullAddress: String
+  }
 
   type Query {
     customerReport(customer: String): Customer
     allCustomerReport(dateFrom: String, dateTo: String): [Customer]
+  }
+  type Mutation {
+    createCustomer(customer: CustomerInput): CustomerList
+  }
+  
+  input CustomerInput {
+    name: String!
+    address: AddressInput!
+  }
+
+  input AddressInput {
+    building_name: String
+    street: String
+    city: String
+    state: String
+    zip_code: String
+    fullAddress: String
   }
 `
 
