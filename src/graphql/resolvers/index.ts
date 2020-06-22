@@ -10,6 +10,7 @@ import userInfo from './UserInfo'
 import shipmentdate from './ShipmentAge'
 import DriverLocation from './DriverLocation'
 import driver from './Driver'
+import delivery from './Delivery'
 
 const resolvers: any[] = [
   report,
@@ -22,6 +23,7 @@ const resolvers: any[] = [
   shipmentdate,
   DriverLocation,
   driver,
+  delivery,
 ]
 
 export default mergeResolvers(resolvers)
