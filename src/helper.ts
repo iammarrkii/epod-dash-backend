@@ -104,36 +104,7 @@ export const fetchDelivery = async (header) => {
   const result: any = await makePromise(execute(link, operation))
     .then((data) => data)
     .catch((error) => error)
-  if (result.data) {
-    const deliverys = result.data.allDeliverys.map((d) => {
-      const items = d.items.map((i) => {
-        // let totalVariance: number = 0
-        const reasonOfVariance =
-          i.variance.length > 0 ? i.variance[0].reasonOfVariance : ''
-        // i.variance.map((v) => {
-        //   totalVariance = v.varianceQty + totalVariance
-        //   console.log('reason', v.reasonOfVariance)
-        // })
-        // console.log('Total Variance', totalVariance)
-        const totalVariance = i.variance.reduce(
-          (total, v) => (total = total + v.varianceQty),
-          0,
-        )
-        return { ...i, reasonOfVariance, varianceQty: totalVariance }
-      })
-
-      return { ...d, items }
-    })
-
-    const retVal = { allDeliverys: deliverys }
-    fetchDeliveryCache.data = retVal
-    fetchDeliveryCache.lastRefresh = Date.now()
-    console.log('renewed fetchDeliveryCache', fetchDeliveryCache.lastRefresh)
-    console.log(Date.now() - fetchDeliveryCache.lastRefresh)
-    return retVal
-  }
-
-  return result.error
+  return result.data
 }
 
 export const fetchDriver = async (header) => {

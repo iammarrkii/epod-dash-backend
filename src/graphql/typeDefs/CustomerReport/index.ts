@@ -18,6 +18,7 @@ const customerTypeDef = gql`
     withVarianceMaterial: [MaterialDetails]
     varianceReport: VarianceReport
     materialReport: MaterialReport
+    variance: [Variance]
   }
 
   type MaterialReport {
@@ -49,6 +50,7 @@ const customerTypeDef = gql`
     pricePerUnit: String
     uom: String
     qty: String
+    variance: [Variance]
     varianceQty: String
     reasonOfVariance: String
     deliveryDateAndTime: String
@@ -65,6 +67,12 @@ const customerTypeDef = gql`
     state: String
     zip_code: String
     fullAddress: String
+  }
+
+  type Variance {
+    id: ID
+    varianceQty: String
+    reasonOfVariance: String
   }
 
   type Query {

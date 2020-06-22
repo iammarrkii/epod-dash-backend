@@ -41,7 +41,11 @@ export const noVarianceMaterialReport = (deliveries: any) => {
   }> = []
   deliveries.map((del) => {
     del.items.map((i) => {
-      if (i.varianceQty === 0) {
+      const totalVar = i.variance.reduce(
+        (totalVariance, v) => (totalVariance = totalVariance + v.varianceQty),
+        0,
+      )
+      if (totalVar === 0) {
         material.push({
           id: i.id,
           itemNumber: i.itemNumber,
@@ -86,7 +90,12 @@ export const materialReportCustomer = (deliveries: any) => {
       let totalVariance = 0
       let totalQuantity = 0
       d.items.map((i) => {
-        totalVariance = totalVariance + parseFloat(i.varianceQty)
+        totalVariance =
+          totalVariance +
+          i.variance.reduce(
+            (total: number, v) => (total = total + parseFloat(v.varianceQty)),
+            0,
+          )
         totalQuantity = totalQuantity + parseFloat(i.qty)
       })
       return {
@@ -117,7 +126,10 @@ export const varianceReportCustomer = (deliveries: any) => {
           return variance
         }
         const qty = item.qty
-        const varianceQty = convertVariance(item.varianceQty, item.qty) || 0
+        const varianceQty = item.variance.reduce(
+          (totalVariance, i) => (totalVariance = totalVariance + i.varianceQty),
+          0,
+        )
         const newVariance = (varianceQty / qty) * 100
 
         variance = variance + newVariance
@@ -127,6 +139,11 @@ export const varianceReportCustomer = (deliveries: any) => {
             id: item.id,
             qty: item.qty,
             varianceQty: item.varianceQty,
+            variance: item.variance.map((v) => ({
+              id: v.id,
+              varianceQty: v.varianceQty,
+              reasonOfVariance: v.reasonOfVariance,
+            })),
             itemNumber: item.itemNumber,
             material: item.material,
             reasonOfVariance: item.reasonOfVariance,

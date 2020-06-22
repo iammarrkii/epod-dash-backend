@@ -8,6 +8,7 @@ const vendorTypeDef = gql`
     totalShipment: String
     varianceReport: [VarianceReport]
     completeReport: CompleteReport
+    variance: [Variance]
   }
 
   type Query {

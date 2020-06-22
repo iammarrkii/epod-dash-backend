@@ -6,7 +6,14 @@ export const makeFillRate = (deliveries: any, range: string) => {
 
     del.items.map((item: any) => {
       totalFillRate =
-        totalFillRate + ((item.varianceQty + item.qty) / item.qty) * 100
+        totalFillRate +
+        ((item.variance.reduce(
+          (totalVariance, v) => (totalVariance = totalVariance + v.varianceQty),
+          0,
+        ) +
+          item.qty) /
+          item.qty) *
+          100
     })
     return {
       fillrate: totalFillRate / del.items.length || 0,

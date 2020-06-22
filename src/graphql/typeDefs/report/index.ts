@@ -106,9 +106,16 @@ const reportTypeDef = gql`
     pricePerUnit: String
     uom: String
     qty: String
+    variance: [Variance]
     varianceQty: String
     reasonOfVariance: String
     deliveryDateAndTime: String
+  }
+
+  type Variance {
+    id: ID
+    varianceQty: String
+    reasonOfVariance: String
   }
 
   type Query {
