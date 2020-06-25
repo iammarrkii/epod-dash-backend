@@ -1,12 +1,8 @@
 const userInfoResolver = {
   Query: {
-    userInfo: async (parent, args, context, info) => {
-      const { user } = context
-
-      return {
-        username: user.username,
-        fullname: user.username,
-      }
+    userInfo: async (parent, args, { userInfo }, info) => {
+      const user = await userInfo()
+      return user.data.userInfo
     },
   },
 }

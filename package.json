@@ -31,7 +31,7 @@
     "dotenv": "^8.2.0",
     "graphql-tools": "^5.0.0",
     "merge-graphql-schemas": "^1.7.7",
-    "moment": "^2.25.1",
+    "moment": "^2.27.0",
     "serve-index": "^1.9.1"
   },
   "scripts": {

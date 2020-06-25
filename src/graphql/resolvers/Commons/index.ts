@@ -307,22 +307,11 @@ const reportResolver = {
         fullAddress: del.customer.address.fullAddress,
       }))
     },
-    loginAuth: async (parent, { userBase }, context, info) => {
-      //      console.log(userBase);
-      //      if (userBase === "TU5hYmFibGl0OjEyMw==") {
-      //        return { success: true, message: "Logged In" };
-      //      }
-      //
-      //      return { success: false, message: "Wrong Credentials" };
-      //    }
+    loginAuth: async (parent, { userBase }, { userLogin }, info) => {
+      const loginQuery = await userLogin()
+      const loginResult: any = await loginQuery(userBase)
 
-      //should not throw?, for login in client purposes? find a workaround
-
-      const { user } = context
-      if (user.id && user.username) {
-        return { success: true, message: 'Authenticated.' }
-      }
-      return { success: false, message: 'Invalid Credentials.' }
+      return loginResult.data.loginAuth
     },
   },
 }
