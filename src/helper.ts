@@ -218,13 +218,13 @@ export const createCustomer = (header) => async (customer) => {
     mutation a($customer: CustomerInput) {
       createCustomer(customer: $customer) {
         name
-        address{
-         building_name
-         street
-         city
-         state
-         zip_code
-         fullAddress
+        address {
+          building_name
+          street
+          city
+          state
+          zip_code
+          fullAddress
         }
       }
     }
@@ -235,10 +235,7 @@ export const createCustomer = (header) => async (customer) => {
     variables: { customer: customer },
     context: {
       headers: {
-        //Den auth
         Authorization: header,
-        //Mark auth
-        //Authorization: "Basic bWFyazoxMjM=",
       },
     },
   }
@@ -258,7 +255,7 @@ export const createDelivery = (header) => async (delivery) => {
     mutation a($delivery: DeliveryInput) {
       createDelivery(delivery: $delivery) {
         id
-        items{
+        items {
           id
           itemNumber
           material
@@ -269,15 +266,15 @@ export const createDelivery = (header) => async (delivery) => {
           deliveryId
           status
           materialnumber
-          variance{
+          variance {
             varianceQty
             reasonOfVariance
           }
         }
-        customer{
+        customer {
           id
           name
-          address{
+          address {
             building_name
             street
             city
@@ -286,7 +283,7 @@ export const createDelivery = (header) => async (delivery) => {
             fullAddress
           }
         }
-        driver{
+        driver {
           id
           name
           plateNumber
@@ -295,10 +292,10 @@ export const createDelivery = (header) => async (delivery) => {
         scheduledDate
         scheduledTime
         unSynced
-        file{
+        file {
           path
         }
-        unSyncedItems{
+        unSyncedItems {
           itemNumber
           material
           pricePerUnit
@@ -308,16 +305,15 @@ export const createDelivery = (header) => async (delivery) => {
           deliveryId
           status
           materialnumber
-          variance{
+          variance {
             varianceQty
             reasonOfVariance
-          } 
+          }
         }
         delvStatus
         shipmentNumber
         trucker
         receivedBy
-      
       }
     }
   `
@@ -327,10 +323,7 @@ export const createDelivery = (header) => async (delivery) => {
     variables: { delivery: delivery },
     context: {
       headers: {
-        //Den auth
         Authorization: header,
-        //Mark auth
-        //Authorization: "Basic bWFyazoxMjM=",
       },
     },
   }
@@ -338,8 +331,58 @@ export const createDelivery = (header) => async (delivery) => {
   const result: any = await makePromise(execute(link, operation))
     .then((data) => data)
     .catch((error) => error)
-    console.log(result.data)
+  console.log(result.data)
   return result.data || result.error
-  
 }
 
+export const userLogin = async (header) => async (userBase) => {
+  const uri = EPOD_API_URI || 'http://localhost:4000/graphql'
+  const link = new HttpLink({ uri })
+  console.log('userBase', userBase)
+  const operation = {
+    query: gql`
+      query login($userBase: String!) {
+        loginAuth(userBase: $userBase) {
+          success
+          message
+        }
+      }
+    `,
+    variables: { userBase: userBase },
+    context: {
+      headers: {
+        Authorization: header,
+      },
+    },
+  }
+
+  return await makePromise(execute(link, operation))
+    .then((data) => data)
+    .catch((error) => error)
+}
+
+export const userInfo = async (header) => {
+  const uri = EPOD_API_URI || 'http://localhost:4000/graphql'
+  const link = new HttpLink({ uri })
+
+  const operation = {
+    query: gql`
+      query {
+        userInfo {
+          username
+          fullname
+        }
+      }
+    `,
+    variables: {},
+    context: {
+      headers: {
+        Authorization: header,
+      },
+    },
+  }
+
+  return await makePromise(execute(link, operation))
+    .then((data) => data)
+    .catch((error) => error)
+}
