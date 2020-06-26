@@ -1,20 +1,3 @@
-import {
-  noVarianceMaterialReport,
-  withVarianceMaterialReport,
-  completeReportCustomer,
-  varianceReportCustomer,
-  materialReportCustomer,
-} from '../../../functions/CustomerFunctions'
-import { filterByDateRange } from '../../../functions/DateFunctions'
-import {
-  completeReportShipment,
-  varianceReportShipment,
-} from '../../../functions/ShipmentFunctions'
-import {
-  completeReportVendor,
-  varianceReportVendor,
-} from '../../../functions/VendorFunctions'
-
 const reportResolver = {
   Query: {
     // allShipmentReport: async (parent, { dateFrom, dateTo }, context, info) => {
@@ -259,54 +242,6 @@ const reportResolver = {
     //   // })
     // },
 
-    allDeliverys: async (
-      parent,
-      { dateFrom, dateTo },
-      { fetchDelivery },
-      info,
-    ) => {
-      const fetchData: any = await fetchDelivery()
-      let deliveries: any = fetchData.allDeliverys
-
-      if (dateFrom || dateTo) {
-        deliveries = deliveries.filter((del) => {
-          if (filterByDateRange(dateFrom, dateTo, del.scheduledDate)) {
-            return del
-          }
-        })
-      }
-
-      return deliveries.map((del) => ({
-        customer: del.customer.name,
-        driver: del.driver.name,
-        file: del.file ? del.file.map((f) => f.path) : null,
-        id: del.id,
-        items: del.items.map((i) => ({
-          id: i.id,
-          itemNumber: i.itemNumber,
-          material: i.material,
-          pricePerUnit: i.pricePerUnit,
-          uom: i.uom,
-          qty: i.qty,
-          variance: i.variance.map((v) => ({
-            id: v.id,
-            varianceQty: v.varianceQty,
-            reasonOfVariance: v.reasonOfVariance,
-          })),
-          varianceQty: i.varianceQty,
-          reasonOfVariance: i.reasonOfVariance,
-          deliveryDateAndTime: i.deliveryDateAndTime,
-        })),
-        deliveryStatus: del.delvStatus,
-        scheduledDate: del.scheduledDate,
-        scheduledTime: del.scheduledTime,
-        shipmentNumber: del.shipmentNumber,
-        trucker: del.trucker,
-        plateNumber: del.driver.plateNumber,
-        helper: del.driver.porter,
-        fullAddress: del.customer.address.fullAddress,
-      }))
-    },
     loginAuth: async (parent, { userBase }, { userLogin }, info) => {
       const loginQuery = await userLogin()
       const loginResult: any = await loginQuery(userBase)

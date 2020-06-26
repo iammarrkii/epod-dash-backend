@@ -27,22 +27,6 @@ const customerTypeDef = gql`
     totalVariance: String
   }
 
-  type Delivery {
-    id: ID
-    customer: String
-    driver: String
-    file: [String]
-    items: [Item]
-    deliveryStatus: String
-    scheduledDate: String
-    scheduledTime: String
-    shipmentNumber: String
-    trucker: String
-    plateNumber: String
-    helper: String
-    fullAddress: String
-  }
-
   type Item {
     id: ID
     itemNumber: String
@@ -82,7 +66,7 @@ const customerTypeDef = gql`
   type Mutation {
     createCustomer(customer: CustomerInput): CustomerList
   }
-  
+
   input CustomerInput {
     name: String!
     address: AddressInput!

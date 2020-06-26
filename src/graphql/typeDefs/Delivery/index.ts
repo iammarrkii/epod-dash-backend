@@ -2,14 +2,19 @@ import { gql } from 'apollo-server'
 
 const deliverytypeDefs = gql`
   type Delivery {
-    id: ID!
+    id: ID
+    customer: String
+    driver: String
+    file: [String]
+    items: [Item]
+    deliveryStatus: String
     scheduledDate: String
     scheduledTime: String
-    unSynced: Boolean
-    delvStatus: String
     shipmentNumber: String
     trucker: String
-    receivedBy: String
+    plateNumber: String
+    helper: String
+    fullAddress: String
   }
   type DeliveryItem {
     id: ID!
@@ -22,7 +27,10 @@ const deliverytypeDefs = gql`
     deliveryId: String!
     status: String
     materialnumber: String
+  }
 
+  type Query {
+    allDeliverys(dateFrom: String, dateTo: String): [Delivery]
   }
 
   type Mutation {
@@ -38,7 +46,7 @@ const deliverytypeDefs = gql`
     trucker: String
     shipmentNumber: String
   }
-  
+
   input DeliveryItemInput {
     itemNumber: String!
     material: String!
@@ -49,7 +57,6 @@ const deliverytypeDefs = gql`
     deliveryId: String
     materialnumber: String
   }
-
 `
 
 export default deliverytypeDefs

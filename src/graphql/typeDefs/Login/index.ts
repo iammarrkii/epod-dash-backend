@@ -40,7 +40,6 @@ const reportTypeDef = gql`
   }
 
   type Query {
-    allDeliverys(dateFrom: String, dateTo: String): [Delivery]
     loginAuth(userBase: String!): Message
   }
 `
