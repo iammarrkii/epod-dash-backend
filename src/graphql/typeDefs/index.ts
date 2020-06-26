@@ -1,7 +1,7 @@
 import { mergeTypes } from 'merge-graphql-schemas'
 
 //import report from "./report";
-import report from './Commons'
+import report from './Login'
 import shipment from './ShipmentReport'
 import customer from './CustomerReport'
 import vendor from './VendorReport'
